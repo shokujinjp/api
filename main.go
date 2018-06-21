@@ -19,7 +19,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 func menuAll(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 
-	all, err := shokujinjp.GetAllMenuData()
+	all, err := shokujinjp.GetMenuAllData()
 	if err != nil {
 		log.Fatal(err)
 	}
