@@ -17,7 +17,7 @@
   branch = "master"
   name = "github.com/shokujinjp/shokujinjp-sdk-go"
   packages = ["shokujinjp"]
-  revision = "dda75b701cb0b2e3904d609c2c6f72fe07c497f5"
+  revision = "09460ae184ba317cc416a2801e0073a71289bf11"
 
 [solve-meta]
   analyzer-name = "dep"
