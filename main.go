@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/shokujinjp/shokujinjp-sdk-go/shokujinjp"
@@ -32,6 +33,23 @@ func menuAll(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, string(jb))
 }
 
+func menuToday(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+
+	today, err := shokujinjp.GetMenuDateData(time.Now())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	jb, err := json.Marshal(today)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Fprint(w, string(jb))
+
+}
+
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
@@ -43,6 +61,7 @@ func main() {
 
 	rMenu := router.PathPrefix("/menu").Subrouter()
 	rMenu.Path("/all").HandlerFunc(menuAll)
+	rMenu.Path("/today").HandlerFunc(menuToday)
 
 	if err := http.ListenAndServe(":"+port, router); err != nil {
 		log.Fatal("ListenAndServe: ", err)
