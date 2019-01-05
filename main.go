@@ -8,6 +8,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"github.com/shokujinjp/shokujinjp-sdk-go/shokujinjp"
 )
@@ -56,6 +57,10 @@ func main() {
 		port = "8080"
 	}
 
+	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With"})
+	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
+	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
+
 	router := mux.NewRouter()
 	router.Path("/").HandlerFunc(index)
 
@@ -63,7 +68,7 @@ func main() {
 	rMenu.Path("/all").HandlerFunc(menuAll)
 	rMenu.Path("/today").HandlerFunc(menuToday)
 
-	if err := http.ListenAndServe(":"+port, router); err != nil {
+	if err := http.ListenAndServe(":"+port, handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)); err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
 
