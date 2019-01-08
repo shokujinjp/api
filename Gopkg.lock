@@ -8,6 +8,12 @@
   version = "v1.1.1"
 
 [[projects]]
+  name = "github.com/gorilla/handlers"
+  packages = ["."]
+  revision = "7e0847f9db758cdebd26c149d0ae9d5d0b9c98ce"
+  version = "v1.4.0"
+
+[[projects]]
   name = "github.com/gorilla/mux"
   packages = ["."]
   revision = "e3702bed27f0d39777b0b37b664b6280e8ef8fbf"
@@ -17,11 +23,11 @@
   branch = "master"
   name = "github.com/shokujinjp/shokujinjp-sdk-go"
   packages = ["shokujinjp"]
-  revision = "a8ae7d15118a1523dff04d8f30f12fda363ab1ab"
+  revision = "29c6d916c8a483385fa539d52ba01300d8bc437b"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "c0809c7ebf46cdf7e113d2099f92828b168345d9536243332428b5192add3f4b"
+  inputs-digest = "2c1fd2a0d4e445c5b0f825984a78f81522501783a5a32988561306108bd6ffa3"
   solver-name = "gps-cdcl"
   solver-version = 1
