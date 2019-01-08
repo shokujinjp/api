@@ -13,6 +13,8 @@ import (
 	"github.com/shokujinjp/shokujinjp-sdk-go/shokujinjp"
 )
 
+const location = "Asia/Tokyo"
+
 func index(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, `{"health": "ok"}`)
@@ -58,6 +60,12 @@ func main() {
 	if port == "" {
 		port = "8080"
 	}
+
+	loc, err := time.LoadLocation(location)
+	if err != nil {
+		loc = time.FixedZone(location, 9*60*60)
+	}
+	time.Local = loc
 
 	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With"})
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
