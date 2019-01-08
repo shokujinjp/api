@@ -42,7 +42,9 @@ func menuToday(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	jb, err := json.Marshal(today)
+	sortedToday := shokujinjp.SortByCategory(today)
+
+	jb, err := json.Marshal(sortedToday)
 	if err != nil {
 		log.Fatal(err)
 	}
