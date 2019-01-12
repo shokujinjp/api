@@ -27,11 +27,11 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:f571b587a9f4621f2620ce8d00bae599e9ff4968a3cc513c23dd4b9466ca3e65"
+  digest = "1:79bbef9c0d0b0960817433d2cd038544c0c3b54f29e38b892663e69780f6b73f"
   name = "github.com/shokujinjp/shokujinjp-sdk-go"
   packages = ["shokujinjp"]
   pruneopts = ""
-  revision = "dc7eaca63aa6c84189373c8a2fa2f673082a256f"
+  revision = "b00149213dd0efae99291187f1e93aebd1cda0e8"
 
 [solve-meta]
   analyzer-name = "dep"
