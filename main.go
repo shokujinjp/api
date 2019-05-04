@@ -10,10 +10,15 @@ import (
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/patrickmn/go-cache"
 	"github.com/shokujinjp/shokujinjp-sdk-go/shokujinjp"
 )
 
 const location = "Asia/Tokyo"
+
+var (
+	c = cache.New(1*time.Hour, 2*time.Hour)
+)
 
 func index(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
@@ -22,6 +27,12 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 func menuAll(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+
+	allValue, found := c.Get("all")
+	if found {
+		fmt.Fprint(w, allValue.(string))
+		return
+	}
 
 	all, err := shokujinjp.GetMenuAllData()
 	if err != nil {
@@ -33,11 +44,21 @@ func menuAll(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
+	c.Set("all", string(jb), cache.DefaultExpiration)
+
 	fmt.Fprint(w, string(jb))
 }
 
 func menuToday(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+
+	todayTime := time.Now().Format(shokujinjp.DayFormat)
+
+	todayValue, found := c.Get(todayTime)
+	if found {
+		fmt.Fprint(w, todayValue.(string))
+		return
+	}
 
 	today, err := shokujinjp.GetMenuDateData(time.Now())
 	if err != nil {
@@ -45,11 +66,12 @@ func menuToday(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sortedToday := shokujinjp.SortByCategory(today)
-
 	jb, err := json.Marshal(sortedToday)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	c.Set(todayTime, string(jb), cache.DefaultExpiration)
 
 	fmt.Fprint(w, string(jb))
 
