@@ -7,9 +7,10 @@ ENV GOOS=linux
 ENV GOARCH=amd64
 WORKDIR /go/src/github.com/shokujinjp/api
 COPY . .
-RUN go get -u github.com/gorilla/handlers \
-    && go get -u github.com/gorilla/mux \
-    && go get -u github.com/shokujinjp/shokujinjp-sdk-go/shokujinjp
+
+ENV GO111MODULE=on
+
+RUN go mod download
 RUN go build . 
 
 # runtime image
