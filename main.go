@@ -36,12 +36,16 @@ func menuAll(w http.ResponseWriter, r *http.Request) {
 
 	all, err := shokujinjp.GetMenuAllData()
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("failed to GetMenuAllData: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 	jb, err := json.Marshal(all)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("failed to json.Marshal: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 	c.Set("all", string(jb), cache.DefaultExpiration)
@@ -62,13 +66,17 @@ func menuToday(w http.ResponseWriter, r *http.Request) {
 
 	today, err := shokujinjp.GetMenuDateData(time.Now())
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("failed to GetMenuDateData: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 	sortedToday := shokujinjp.SortByCategory(today)
 	jb, err := json.Marshal(sortedToday)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("failed to SortByCategory: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 	c.Set(todayTime, string(jb), cache.DefaultExpiration)
@@ -92,6 +100,8 @@ func main() {
 	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With"})
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
+
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	router := mux.NewRouter()
 	router.Path("/").HandlerFunc(index)
