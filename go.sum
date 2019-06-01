@@ -1,0 +1,8 @@
+github.com/gorilla/handlers v1.4.0 h1:XulKRWSQK5uChr4pEgSE4Tc/OcmnU9GJuSwdog/tZsA=
+github.com/gorilla/handlers v1.4.0/go.mod h1:Qkdc/uu4tH4g6mTK6auzZ766c4CA0Ng8+o/OAirnOIQ=
+github.com/gorilla/mux v1.7.2 h1:zoNxOV7WjqXptQOVngLmcSQgXmgk4NMz1HibBchjl/I=
+github.com/gorilla/mux v1.7.2/go.mod h1:1lud6UwP+6orDFRuTfBEV8e9/aOM/c4fVVCaMa2zaAs=
+github.com/patrickmn/go-cache v2.1.0+incompatible h1:HRMgzkcYKYpi3C8ajMPV8OFXaaRUnok+kx1WdO15EQc=
+github.com/patrickmn/go-cache v2.1.0+incompatible/go.mod h1:3Qf8kWWT7OJRJbdiICTKqZju1ZixQ/KpMGzzAfe6+WQ=
+github.com/shokujinjp/shokujinjp-sdk-go v0.0.0-20190601090119-26bc60ba0f77 h1:I53SMkC/4qKMCorzGDJAqrYjiohZPI51dYpPT6Y4so8=
+github.com/shokujinjp/shokujinjp-sdk-go v0.0.0-20190601090119-26bc60ba0f77/go.mod h1:fDY/VwimBLnshJx9PvBoJegsrghCVnA5PJcO/LX6RVM=
