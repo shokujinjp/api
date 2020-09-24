@@ -11,7 +11,19 @@ jobs:
   docker-build:
     name: docker build
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        arch:
+          - amd64
+          - arm32v7
+          - arm64v8
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+      - name: go build
+        run: go build .
+        env:
+          GOOS: linux
+          GOARCH: ${{ matrix.arch }}
       - name: docker build
-        run: docker build -t ${{ env.DOCKER_IMAGE_NAME }} --no-cache .
+        run: docker build -t ${{ env.DOCKER_IMAGE_NAME }}:latest-${{ matrix.arch }} --no-cache --build-arg arch=${{ matrix.arch }} .
