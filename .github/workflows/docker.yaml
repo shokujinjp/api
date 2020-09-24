@@ -24,7 +24,7 @@ jobs:
       - name: define CC
         run: echo ::set-env name=CC::$(echo '${{ toJSON(env.ARCH_CC_MAP) }}' | jq .${{ matrix.arch }}.gcc )
       - name: define GOARCH
-        - run: echo ::set-env name=CC::$(echo '${{ toJSON(env.ARCH_CC_MAP) }}' | jq .${{ matrix.arch }}.goarch )
+        run: echo ::set-env name=CC::$(echo '${{ toJSON(env.ARCH_CC_MAP) }}' | jq .${{ matrix.arch }}.goarch )
       - name: apt update
         run: sudo apt update -y
       - name: install gcc
