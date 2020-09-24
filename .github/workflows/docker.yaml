@@ -31,6 +31,6 @@ jobs:
         env:
           GOOS: linux
           GOARCH: ${{ (contains(matrix.arch, 'arm') && 'arm') || 'amd64' }}
-          CC: ${{ (contains(matrix.arch, 'arm64') && 'aarch64-linux-gnu-gcc' || '' }}
+          CC: ${{ (contains(matrix.arch, 'arm64') && 'aarch64-linux-gnu-gcc') || '' }}
       - name: docker build
         run: docker build -t ${{ env.DOCKER_IMAGE_NAME }}:latest-${{ matrix.arch }} --no-cache --build-arg arch=${{ matrix.arch }} .
