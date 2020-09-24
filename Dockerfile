@@ -1,8 +1,8 @@
 ARG arch=amd64
 
-MAINTAINER "GitHub shokujinjp Team <https://github.com/shokujinjp>"
-
 FROM ${arch}/alpine
+
+MAINTAINER "GitHub shokujinjp Team <https://github.com/shokujinjp>"
 
 RUN apk add --no-cache ca-certificates
 ADD ./api /api
