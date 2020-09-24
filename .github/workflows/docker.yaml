@@ -1,0 +1,17 @@
+name: docker
+on:
+  push:
+    branches:
+      - "**"
+
+env:
+  DOCKER_IMAGE_NAME: shokujinjp/api
+
+jobs:
+  docker-build:
+    name: docker build
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: docker build
+        run: docker build -t ${{ env.DOCKER_IMAGE_NAME }} --no-cache .
