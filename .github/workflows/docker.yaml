@@ -6,6 +6,7 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: shokujinjp/api
+  CGO_ENABLED: 0
 
 jobs:
   docker-build:
@@ -24,6 +25,6 @@ jobs:
         run: go build .
         env:
           GOOS: linux
-          GOARCH: ${{ matrix.arch }}
+          GOARCH: ${{ ( contains(matrix.arch, 'arm') && 'arm') || 'amd64' }}
       - name: docker build
         run: docker build -t ${{ env.DOCKER_IMAGE_NAME }}:latest-${{ matrix.arch }} --no-cache --build-arg arch=${{ matrix.arch }} .
