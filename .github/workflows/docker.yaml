@@ -6,7 +6,7 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: shokujinjp/api
-  ARCH_CC_MAP: '{"amd64":{"gcc":"", "goarch": "amd64"}, "arm32v7":{"gcc":"aarch64-linux-gnu-gcc", "goarch": "arm"}, "arm64v8":{"gcc":"aarch64-linux-gnu-gcc", "goarch": "arm64"}}'
+  ARCH_CC_MAP: '{"amd64":{"gcc":"", "package": "", "goarch": "amd64"}, "arm32v7":{"gcc":"aarch64-linux-gnu-gcc", "package": "", "goarch": "arm"}, "arm64v8":{"gcc":"aarch64-linux-gnu-gcc", "package": "gcc-aarch64-linux-gnu", "goarch": "arm64"}}'
 
 jobs:
   docker-build:
@@ -25,11 +25,13 @@ jobs:
         run: echo ::set-env name=CC::$(echo '${{ env.ARCH_CC_MAP }}' | jq -r . | jq .${{ matrix.arch }}.gcc )
       - name: define GOARCH
         run: echo ::set-env name=GOARCH::$(echo '${{ env.ARCH_CC_MAP }}' | jq -r . | jq .${{ matrix.arch }}.goarch )
+      - name: define PACKAGE
+        run: echo ::set-env name=PACKAGE::$(echo '${{ env.ARCH_CC_MAP }}' | jq -r . | jq .${{ matrix.arch }}.package )
       - name: apt update
         run: sudo apt update -y
       - name: install gcc
-        run: sudo apt install -y ${CC}
-        if: ${{ env.CC }} != ""
+        run: sudo apt install -y ${PACKAGE}
+        if: ${{ env.PACKAGE }} != ""
       - name: go build
         run: go build .
         env:
