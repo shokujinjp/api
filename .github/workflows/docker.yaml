@@ -21,10 +21,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
+      - name: apt update
+        run: apt update -y
+      - name: install aarch64 gcc
+        run: apt install -y gcc-aarch64-linux-gnu
+        if: contains(matrix.arch, 'arm64')
       - name: go build
         run: go build .
         env:
           GOOS: linux
-          GOARCH: ${{ ( contains(matrix.arch, 'arm') && 'arm') || 'amd64' }}
+          GOARCH: ${{ (contains(matrix.arch, 'arm') && 'arm') || 'amd64' }}
+          CC: ${{ (contains(matrix.arch, 'arm64') && 'aarch64-linux-gnu-gcc' || '' }}
       - name: docker build
         run: docker build -t ${{ env.DOCKER_IMAGE_NAME }}:latest-${{ matrix.arch }} --no-cache --build-arg arch=${{ matrix.arch }} .
