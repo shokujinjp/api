@@ -22,9 +22,9 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
       - name: apt update
-        run: apt update -y
+        run: sudo apt update -y
       - name: install aarch64 gcc
-        run: apt install -y gcc-aarch64-linux-gnu
+        run: sudo apt install -y gcc-aarch64-linux-gnu
         if: contains(matrix.arch, 'arm64')
       - name: go build
         run: go build .
