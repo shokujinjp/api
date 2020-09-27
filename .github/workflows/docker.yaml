@@ -5,7 +5,7 @@ on:
       - "**"
 
 env:
-  DOCKER_IMAGE_NAME: docker.pkg.github.com/shokujinjp/api:latest
+  DOCKER_IMAGE_NAME: shokujinjp/api:latest
   ARCH_CC_MAP: '{"amd64":{"gcc":"", "package": "", "goarch": "amd64"}, "arm32v7":{"gcc":"aarch64-linux-gnu-gcc", "package": "gcc-arm-none-eabi", "goarch": "arm"}, "arm64v8":{"gcc":"aarch64-linux-gnu-gcc", "package": "gcc-aarch64-linux-gnu", "goarch": "arm64"}}'
 
 jobs:
@@ -22,6 +22,6 @@ jobs:
       - name: docker login
         if: github.event_name != 'pull_request'
         run: |
-          echo  ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u whywaita --password-stdin
+          echo  ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
       - name: docker build
         run: docker buildx build --platform linux/arm/v7,linux/arm64,linux/amd64 -t ${DOCKER_IMAGE_NAME} --push .
