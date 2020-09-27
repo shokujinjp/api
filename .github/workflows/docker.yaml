@@ -13,6 +13,7 @@ jobs:
     name: docker build
     runs-on: ubuntu-18.04
     steps:
+      - uses: actions/checkout@v2
       - name: setup docker buildx
         id: buildx
         uses: crazy-max/ghaction-docker-buildx@v1
