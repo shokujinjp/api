@@ -1,0 +1,29 @@
+name: docker
+on:
+  push:
+    branches:
+      - "**"
+
+env:
+  DOCKER_IMAGE_NAME: shokujinjp/api:latest
+
+jobs:
+  docker-build:
+    name: docker build
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: setup docker buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
+      - name: docker login
+        if: github.event_name != 'pull_request'
+        run: |
+          echo  ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: docker build
+        run: docker buildx build --platform linux/arm/v7,linux/arm64,linux/amd64 -t ${DOCKER_IMAGE_NAME} --push .
+      - name: delete credential
+        run: rm -rf $(pwd)/.docker
+        if: always()

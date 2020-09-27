@@ -3,15 +3,13 @@ FROM golang:latest as builder
 MAINTAINER "GitHub shokujinjp Team <https://github.com/shokujinjp>"
 
 ENV CGO_ENABLED=0
-ENV GOOS=linux
-ENV GOARCH=amd64
 WORKDIR /go/src/github.com/shokujinjp/api
 COPY . .
 
 ENV GO111MODULE=on
 
 RUN go mod download
-RUN go build . 
+RUN go build .
 
 # runtime image
 FROM alpine
