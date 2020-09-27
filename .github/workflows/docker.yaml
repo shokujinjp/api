@@ -11,7 +11,7 @@ env:
 jobs:
   docker-build:
     name: docker build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-18.04
     strategy:
       matrix:
         arch:
@@ -30,8 +30,8 @@ jobs:
       - name: install package
         run: |
           sudo apt update -y -qq
-          sudo apt-get install -y build-essential
-          sudo apt-get install -y ${PACKAGE}
+          sudo apt install -y build-essential
+          sudo apt install -y ${PACKAGE}
       - name: go build
         run: go build .
         env:
