@@ -5,7 +5,7 @@ on:
       - "**"
 
 env:
-  DOCKER_IMAGE_NAME: shokujinjp/api
+  DOCKER_IMAGE_NAME: docker.pkg.github.com/shokujinjp/api:latest
   ARCH_CC_MAP: '{"amd64":{"gcc":"", "package": "", "goarch": "amd64"}, "arm32v7":{"gcc":"aarch64-linux-gnu-gcc", "package": "gcc-arm-none-eabi", "goarch": "arm"}, "arm64v8":{"gcc":"aarch64-linux-gnu-gcc", "package": "gcc-aarch64-linux-gnu", "goarch": "arm64"}}'
 
 jobs:
@@ -19,5 +19,9 @@ jobs:
         uses: crazy-max/ghaction-docker-buildx@v1
         with:
           version: latest
+      - name: docker login
+        if: github.event_name != 'pull_request'
+        run: |
+          echo  ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u whywaita --password-stdin
       - name: docker build
-        run: docker buildx build --platform linux/arm/v7,linux/arm64,linux/amd64 --load .
+        run: docker buildx build --platform linux/arm/v7,linux/arm64,linux/amd64 --push .
