@@ -24,4 +24,4 @@ jobs:
         run: |
           echo  ${{ secrets.GITHUB_TOKEN }} | docker login docker.pkg.github.com -u whywaita --password-stdin
       - name: docker build
-        run: docker buildx build --platform linux/arm/v7,linux/arm64,linux/amd64 --push .
+        run: docker buildx build --platform linux/arm/v7,linux/arm64,linux/amd64 -t ${DOCKER_IMAGE_NAME} --push .
