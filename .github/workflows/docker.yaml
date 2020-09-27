@@ -31,7 +31,7 @@ jobs:
         run: |
           sudo apt update -y -qq
           sudo apt install -y build-essential
-          if [ ${PACKAGE} != "" ]; then
+          if [ "${PACKAGE}" != "" ]; then
             sudo apt install -y ${PACKAGE}
           fi
       - name: go build
