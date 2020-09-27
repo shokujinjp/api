@@ -6,7 +6,7 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: shokujinjp/api
-  ARCH_CC_MAP: '{"amd64":{"gcc":"", "package": "", "goarch": "amd64"}, "arm32v7":{"gcc":"aarch64-linux-gnu-gcc", "package": "", "goarch": "arm"}, "arm64v8":{"gcc":"aarch64-linux-gnu-gcc", "package": "gcc-aarch64-linux-gnu", "goarch": "arm64"}}'
+  ARCH_CC_MAP: '{"amd64":{"gcc":"", "package": "gcc", "goarch": "amd64"}, "arm32v7":{"gcc":"aarch64-linux-gnu-gcc", "package": "gcc-arm-none-eabi", "goarch": "arm"}, "arm64v8":{"gcc":"aarch64-linux-gnu-gcc", "package": "gcc-aarch64-linux-gnu", "goarch": "arm64"}}'
 
 jobs:
   docker-build:
@@ -30,10 +30,7 @@ jobs:
       - name: apt update
         run: sudo apt update -y -qq
       - name: install gcc
-        run: |
-          if [ "${PACKAGE}" != "" ]; then
-            sudo apt install -y ${PACKAGE}
-          fi
+        run: sudo apt install -y ${PACKAGE}
       - name: go build
         run: go build .
         env:
