@@ -31,7 +31,7 @@ jobs:
         run: sudo apt update -y -qq
       - name: install gcc
         run: |
-          if [ "${PACKAGE}" == "" ]; then
+          if [ "${PACKAGE}" = "" ]; then
             exit 0
           fi
           sudo apt install -y ${PACKAGE}
