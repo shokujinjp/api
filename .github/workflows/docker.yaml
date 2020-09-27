@@ -6,7 +6,6 @@ on:
 
 env:
   DOCKER_IMAGE_NAME: shokujinjp/api:latest
-  ARCH_CC_MAP: '{"amd64":{"gcc":"", "package": "", "goarch": "amd64"}, "arm32v7":{"gcc":"aarch64-linux-gnu-gcc", "package": "gcc-arm-none-eabi", "goarch": "arm"}, "arm64v8":{"gcc":"aarch64-linux-gnu-gcc", "package": "gcc-aarch64-linux-gnu", "goarch": "arm64"}}'
 
 jobs:
   docker-build:
