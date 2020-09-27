@@ -31,10 +31,9 @@ jobs:
         run: sudo apt update -y -qq
       - name: install gcc
         run: |
-          if [ "${PACKAGE}" = "" ]; then
-            exit 0
+          if [ "${PACKAGE}" != "" ]; then
+            sudo apt install -y ${PACKAGE}
           fi
-          sudo apt install -y ${PACKAGE}
       - name: go build
         run: go build .
         env:
