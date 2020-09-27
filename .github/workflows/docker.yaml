@@ -12,31 +12,39 @@ jobs:
   docker-build:
     name: docker build
     runs-on: ubuntu-18.04
-    strategy:
-      matrix:
-        arch:
-          - amd64
-          - arm32v7
-          - arm64v8
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-      - name: define CC
-        run: echo ::set-env name=CC::$(echo '${{ env.ARCH_CC_MAP }}' | jq -r . | jq .${{ matrix.arch }}.gcc )
-      - name: define GOARCH
-        run: echo ::set-env name=GOARCH::$(echo '${{ env.ARCH_CC_MAP }}' | jq -r . | jq .${{ matrix.arch }}.goarch )
-      - name: define PACKAGE
-        run: echo ::set-env name=PACKAGE::$(echo '${{ env.ARCH_CC_MAP }}' | jq -r . | jq .${{ matrix.arch }}.package )
-      - name: install package
-        run: |
-          sudo apt update -y -qq
-          sudo apt install -y build-essential
-          if [ "${PACKAGE}" != "" ]; then
-            sudo apt install -y ${PACKAGE}
-          fi
-      - name: go build
-        run: go build .
-        env:
-          GOOS: linux
+#    strategy:
+#      matrix:
+#        arch:
+#          - amd64
+#          - arm32v7
+#          - arm64v8
+#    steps:
+#      - uses: actions/checkout@v2
+#      - uses: actions/setup-go@v2
+#      - name: define CC
+#        run: echo ::set-env name=CC::$(echo '${{ env.ARCH_CC_MAP }}' | jq -r . | jq .${{ matrix.arch }}.gcc )
+#      - name: define GOARCH
+#        run: echo ::set-env name=GOARCH::$(echo '${{ env.ARCH_CC_MAP }}' | jq -r . | jq .${{ matrix.arch }}.goarch )
+#      - name: define PACKAGE
+#        run: echo ::set-env name=PACKAGE::$(echo '${{ env.ARCH_CC_MAP }}' | jq -r . | jq .${{ matrix.arch }}.package )
+#      - name: install package
+#        run: |
+#          set -x
+#
+#          sudo apt update -y -qq
+#          sudo apt install -y build-essential
+#          if [ "${PACKAGE}" != "" ]; then
+#            sudo apt install -y ${PACKAGE}
+#          fi
+#      - name: go build
+#        run: go build .
+#        env:
+#          GOOS: linux
+      - name: setup docker buildx
+        id: buildx
+        uses: crazy-max/ghaction-docker-buildx@v1
+        with:
+          version: latest
       - name: docker build
-        run: docker build -t ${{ env.DOCKER_IMAGE_NAME }}:latest-${{ matrix.arch }} --no-cache --build-arg arch=${{ matrix.arch }} .
+        run: docker buildx build \
+               --platform linux/arm/v7,linux/arm64,linux/amd64
