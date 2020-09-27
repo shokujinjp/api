@@ -28,10 +28,10 @@ jobs:
       - name: define PACKAGE
         run: echo ::set-env name=PACKAGE::$(echo '${{ env.ARCH_CC_MAP }}' | jq -r . | jq .${{ matrix.arch }}.package )
       - name: apt update
-        run: sudo apt update -y
+        run: sudo apt update -y -qq
       - name: install gcc
         run: sudo apt install -y ${PACKAGE}
-        if: ${{ env.PACKAGE }} != ""
+        if: env.PACKAGE != ""
       - name: go build
         run: go build .
         env:
