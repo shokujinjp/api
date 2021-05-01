@@ -6,3 +6,5 @@ github.com/patrickmn/go-cache v2.1.0+incompatible h1:HRMgzkcYKYpi3C8ajMPV8OFXaaR
 github.com/patrickmn/go-cache v2.1.0+incompatible/go.mod h1:3Qf8kWWT7OJRJbdiICTKqZju1ZixQ/KpMGzzAfe6+WQ=
 github.com/shokujinjp/shokujinjp-sdk-go v0.0.0-20190601090119-26bc60ba0f77 h1:I53SMkC/4qKMCorzGDJAqrYjiohZPI51dYpPT6Y4so8=
 github.com/shokujinjp/shokujinjp-sdk-go v0.0.0-20190601090119-26bc60ba0f77/go.mod h1:fDY/VwimBLnshJx9PvBoJegsrghCVnA5PJcO/LX6RVM=
+github.com/shokujinjp/shokujinjp-sdk-go v0.0.0-20210501145338-5dad946331b3 h1:heH+bs018+HjpL6kEaPsCcm1tOAq4lR92RbESTOi2z8=
+github.com/shokujinjp/shokujinjp-sdk-go v0.0.0-20210501145338-5dad946331b3/go.mod h1:8Zx4aYn2SVAY4GKYJEkKNSZUMYOnng8nYTo+4CIdODw=
