@@ -60,3 +60,7 @@ List of all menus in [shokujinjp/data](https://github.com/shokujinjp/data)
   ...
 ]
 ```
+
+### GET `/joke/markov`
+
+This endpoint is a joke :)
