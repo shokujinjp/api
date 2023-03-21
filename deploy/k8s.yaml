@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: shokujinjp-api
-        image: shokujinjp/api:latest
+        image: ghcr.io/shokujinjp/api:latest
         ports:
         - containerPort: 8080
 ---
