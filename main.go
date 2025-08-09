@@ -29,6 +29,27 @@ const (
 	cacheKeyALL = "all"
 )
 
+func loggingMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()
+		next.ServeHTTP(w, r)
+		duration := time.Since(start)
+
+		accessLog := struct {
+			Method   string `json:"method"`
+			Path     string `json:"path"`
+			Duration string `json:"duration"`
+		}{
+			Method:   r.Method,
+			Path:     r.URL.Path,
+			Duration: duration.String(),
+		}
+
+		logData, _ := json.Marshal(accessLog)
+		log.Println(string(logData))
+	})
+}
+
 func index(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	fmt.Fprintf(w, `{"health": "ok"}`)
@@ -153,6 +174,7 @@ func main() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 
 	router := mux.NewRouter()
+	router.Use(loggingMiddleware)
 	router.Path("/").HandlerFunc(index)
 
 	rMenu := router.PathPrefix("/menu").Subrouter()
